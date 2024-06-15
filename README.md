@@ -29,7 +29,7 @@ And indeed, you can confirm that this works by running `./gradlew bootRun` follo
 To create the docker images needed to test this project as docker containers, you can use the following command:
 
 ```shell
-./gradlew clean build -x test && docker build -t sample-graceful-shutdown:cmd -f Dockerfile_CMD . && docker build -t sample-graceful-shutdown:entrypoint -f Dockerfile_ENTRYPOINT .
+docker build -t sample-graceful-shutdown:cmd -f Dockerfile_CMD . && docker build -t sample-graceful-shutdown:entrypoint -f Dockerfile_ENTRYPOINT .
 ```
 
 This will create 2 docker images, one that uses the `CMD` instruction to start the .jar and the other using the `ENTRYPOINT`.
