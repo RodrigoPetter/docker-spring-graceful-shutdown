@@ -1,0 +1,8 @@
+version: "3.4"
+services:
+  cmd_service:
+    image: sample-graceful-shutdown:cmd
+    stop_grace_period: 30s
+  entrypoint_service:
+    image: sample-graceful-shutdown:entrypoint
+    stop_grace_period: 30s
