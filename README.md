@@ -43,7 +43,9 @@ docker stack deploy -c docker-compose-deploy.yml mystack
 ```
 
 Now, you will need 2 terminals to see what happens.
+
 In the first one, run this command to see the logs inside the first container: `docker service logs -f mystack_cmd_service`.
+
 Confirm that our hold task is printing the logs and then use this to trigger a container restart `docker service update --force mystack_cmd_service`.
 
 You will see that the container will hang for 30 seconds (this time comes from docker stop_grace_period in the compose file) before exiting without
@@ -53,3 +55,7 @@ After the `stop_grace_period`, docker sent a `SIGKILL` killing the process and t
 If we do the same, but this time with the other service named `mystack_entrypoint_service` we will see the same behavior as when we run the .jar with `./gradlew bootRun`.
 As soon as we sent the update command, spring will print something like `Commencing graceful shutdown.` and as soon as our hold task finishes, the .jar will exit and the container will be
 shut down.
+
+If you do not want to use docker swarm for testing, you cant do the same as before, but use `docker run [IMAGE_NAME]` to run the container and `docker stop [CONTAINER_ID]` to send the `SIGTERM` signal.
+You'll see that the stop command for the CMD image will do nothing, the container will not stop, it only will stop with a `docker kill` command. For the ENTRYPOINT image, it will work just like the test
+using docker swarm.
